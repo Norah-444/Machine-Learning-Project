@@ -43,13 +43,16 @@ This project applies **Support Vector Machine (SVM)** classifiers to the **Fashi
 ```
 fashion-mnist-svm/
 │
-├── notebook.ipynb          # Main Jupyter notebook (all cells)
+├── notebook.ipynb          # Main Jupyter notebook (all 14 cells)
 ├── README.md               # Project documentation
 │
 └── figures/                # Output plots (auto-generated)
     ├── sample_images.png
-    ├── confusion_matrix.png
-    └── predictions.png
+    ├── samples_per_class.png
+    ├── confusion_matrix_rbf.png
+    ├── confusion_matrix_poly.png
+    ├── predictions.png
+    └── results_comparison.png
 ```
 
 ---
@@ -96,16 +99,48 @@ GridSearchCV with **5-fold cross-validation** was used to find optimal parameter
 
 ---
 
+## 🚀 Getting Started
+
+### 1. Clone the repository
+```bash
+git clone https://github.com/your-username/fashion-mnist-svm.git
+cd fashion-mnist-svm
+```
+
+### 2. Install dependencies
+```bash
+pip install numpy pandas matplotlib seaborn scikit-learn kagglehub
+```
+
+### 3. Run the notebook
+```bash
+jupyter notebook notebook.ipynb
+```
+
+> **Note:** The notebook will automatically download the Fashion MNIST dataset via `kagglehub` on first run. Make sure you have a Kaggle account and your API key configured.
+
+### Kaggle API Setup
+```bash
+# Install kaggle CLI
+pip install kaggle
+
+# Place your kaggle.json in:
+# ~/.kaggle/kaggle.json              (Linux / Mac)
+# C:\Users\<user>\.kaggle\kaggle.json  (Windows)
+```
+
+---
+
 ## 📦 Dependencies
 
-| Package       | Purpose                          |
-|---------------|----------------------------------|
-| `numpy`       | Numerical operations             |
-| `pandas`      | Data loading and manipulation    |
-| `matplotlib`  | Plotting and visualization       |
-| `seaborn`     | Heatmaps and styled plots        |
-| `scikit-learn`| SVM, PCA, GridSearchCV, metrics  |
-| `kagglehub`   | Downloading the dataset          |
+| Package        | Purpose                         |
+|----------------|---------------------------------|
+| `numpy`        | Numerical operations            |
+| `pandas`       | Data loading and manipulation   |
+| `matplotlib`   | Plotting and visualization      |
+| `seaborn`      | Heatmaps and styled plots       |
+| `scikit-learn` | SVM, PCA, GridSearchCV, metrics |
+| `kagglehub`    | Downloading the dataset         |
 
 ---
 
@@ -113,17 +148,20 @@ GridSearchCV with **5-fold cross-validation** was used to find optimal parameter
 
 | Cell | Description |
 |------|-------------|
-| 1 | Imports & Dataset Download |
-| 2 | Load & Explore Data |
-| 3 | Prepare Features & Labels + Normalization |
-| 4 | Visualize Sample Images |
-| 5 | Create Training Subset (10K samples) |
-| 6 | Baseline SVM — RBF & Polynomial |
-| 7 | GridSearchCV — Best RBF Kernel |
-| 8 | GridSearchCV — Best Polynomial Kernel |
-| 9 | Evaluate Best Models + Classification Report |
+| 1  | Imports & Dataset Download |
+| 2  | Load & Explore Data |
+| 3  | Prepare Features & Labels + Normalization |
+| 4  | Visualize Sample Images |
+| 5  | Create Training Subset (10K samples) |
+| 6  | Baseline SVM — RBF & Polynomial |
+| 7  | GridSearchCV — Best RBF Kernel |
+| 8  | GridSearchCV — Best Polynomial Kernel |
+| 9  | Evaluate Best Models + Classification Report |
 | 10 | Confusion Matrix Heatmap |
-| 11 | Visualize Predictions (Correct/Incorrect) |
+| 11 | Visualize Predictions (Correct / Incorrect) |
+| 12 | One Sample Per Class (Dataset Overview) |
+| 13 | Results Comparison Table — All 4 Models |
+| 14 | Reusable Helper Functions (`evaluate_model`, `build_svm_pipeline`) |
 
 ---
 
@@ -131,11 +169,11 @@ GridSearchCV with **5-fold cross-validation** was used to find optimal parameter
 
 | Name | Student ID |
 |------|------------|
-| [Norah Aljayan] | [444200832] |
+| Norah Aljayan | 444200832 |
 | [Teammate Name] | [ID] |
 
 **Course:** IT461 — Practical Machine Learning  
-**Institution:** [king saud university]  
+**Institution:** King Saud University  
 **Semester:** Spring 2026
 
 ---
