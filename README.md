@@ -99,38 +99,6 @@ GridSearchCV with **5-fold cross-validation** was used to find optimal parameter
 
 ---
 
-## 🚀 Getting Started
-
-### 1. Clone the repository
-```bash
-git clone https://github.com/your-username/fashion-mnist-svm.git
-cd fashion-mnist-svm
-```
-
-### 2. Install dependencies
-```bash
-pip install numpy pandas matplotlib seaborn scikit-learn kagglehub
-```
-
-### 3. Run the notebook
-```bash
-jupyter notebook notebook.ipynb
-```
-
-> **Note:** The notebook will automatically download the Fashion MNIST dataset via `kagglehub` on first run. Make sure you have a Kaggle account and your API key configured.
-
-### Kaggle API Setup
-```bash
-# Install kaggle CLI
-pip install kaggle
-
-# Place your kaggle.json in:
-# ~/.kaggle/kaggle.json              (Linux / Mac)
-# C:\Users\<user>\.kaggle\kaggle.json  (Windows)
-```
-
----
-
 ## 📦 Dependencies
 
 | Package        | Purpose                         |
