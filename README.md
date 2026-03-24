@@ -138,7 +138,7 @@ GridSearchCV with **5-fold cross-validation** was used to find optimal parameter
 | Name | Student ID |
 |------|------------|
 | Norah Aljayan | 444200832 |
-| [Teammate Name] | [ID] |
+| Rana Alngashy | 444204737 |
 
 **Course:** IT461 — Practical Machine Learning  
 **Institution:** King Saud University  
