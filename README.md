@@ -139,6 +139,7 @@ GridSearchCV with **5-fold cross-validation** was used to find optimal parameter
 |------|------------|
 | Norah Aljayan | 444200832 |
 | Rana Alngashy | 444204737 |
+| Ghalia Alkhaldi | 444200534 |
 
 **Course:** IT461 — Practical Machine Learning  
 **Institution:** King Saud University  
