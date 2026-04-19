@@ -2,15 +2,15 @@
 ### IT461 — Practical Machine Learning | Project Checkpoint
 
 ![Python](https://img.shields.io/badge/Python-3.8+-3776AB?style=flat-square&logo=python&logoColor=white)
+![PyTorch](https://img.shields.io/badge/PyTorch-2.x-EE4C2C?style=flat-square&logo=pytorch&logoColor=white)
 ![scikit-learn](https://img.shields.io/badge/scikit--learn-1.x-F7931E?style=flat-square&logo=scikit-learn&logoColor=white)
-![Kaggle](https://img.shields.io/badge/Dataset-Fashion--MNIST-20BEFF?style=flat-square&logo=kaggle&logoColor=white)
 ![Status](https://img.shields.io/badge/Status-In%20Progress-yellow?style=flat-square)
 
 ---
 
 ## 📌 Overview
 
-This project applies **Support Vector Machine (SVM)** classifiers to the **Fashion MNIST** dataset to classify grayscale images of clothing items into **10 categories**. The goal is to explore how well classical machine learning methods perform on image classification tasks, with systematic hyperparameter tuning and performance evaluation.
+This project applies multiple machine learning methods to the **Fashion MNIST** dataset to classify grayscale images of clothing items into **10 categories**. We explore and compare classical ML methods (SVM, KNN) and a deep learning approach (CNN), with systematic hyperparameter tuning and performance evaluation across all methods.
 
 ---
 
@@ -41,16 +41,18 @@ This project applies **Support Vector Machine (SVM)** classifiers to the **Fashi
 ## 📁 Project Structure
 
 ```
-fashion-mnist-svm/
+fashion-mnist-classification/
 │
-├── notebook.ipynb          # Main Jupyter notebook (all 14 cells)
+├── notebook.ipynb          # Main Jupyter notebook (all sections)
 ├── README.md               # Project documentation
 │
 └── figures/                # Output plots (auto-generated)
     ├── sample_images.png
-    ├── samples_per_class.png
-    ├── confusion_matrix_rbf.png
-    ├── confusion_matrix_poly.png
+    ├── cnn_training_curves.png
+    ├── confusion_matrix_cnn.png
+    ├── confusion_matrix_knn.png
+    ├── confusion_matrix_svm_rbf.png
+    ├── confusion_matrix_svm_poly.png
     ├── predictions.png
     └── results_comparison.png
 ```
@@ -60,29 +62,49 @@ fashion-mnist-svm/
 ## 🔧 Methods
 
 ### Models Explored
-- **SVM with RBF Kernel** — baseline and GridSearchCV-tuned
-- **SVM with Polynomial Kernel** — baseline and GridSearchCV-tuned
 
-### Pipeline
+| Method | Type | Tuning |
+|--------|------|--------|
+| **CNN** | Deep Learning | Learning rate search (0.01, 0.001) |
+| **KNN** | Classical ML | GridSearchCV — k, distance metric |
+| **SVM — RBF Kernel** | Classical ML | GridSearchCV — C, gamma |
+| **SVM — Polynomial Kernel** | Classical ML | GridSearchCV — C, degree, gamma |
+
+### Pipeline (CNN)
+```
+Raw Images (28×28)
+        ↓
+  Normalization (ToTensor)
+        ↓
+  Conv2d → ReLU → MaxPool (×2)
+        ↓
+  Fully Connected + Dropout
+        ↓
+  Predicted Class Label
+```
+
+### Pipeline (KNN & SVM)
 ```
 Raw Images (784 features)
         ↓
   Normalization (÷ 255)
         ↓
-  PCA (784 → 100 components)
+  PCA (784 → 100 components, whitened)
         ↓
-  SVM Classifier (RBF / Poly)
+  KNN / SVM Classifier
         ↓
   Predicted Class Label
 ```
 
 ### Hyperparameter Tuning
-GridSearchCV with **5-fold cross-validation** was used to find optimal parameters:
+GridSearchCV with **5-fold cross-validation** for all sklearn methods. Manual learning rate search for CNN.
 
-| Kernel     | Parameters Tuned              |
-|------------|-------------------------------|
-| RBF        | `C` ∈ {1, 5, 10}, `gamma` ∈ {0.0005, 0.001, 0.005} |
-| Polynomial | `C` ∈ {0.1, 1, 5, 10}, `degree` ∈ {2, 3, 4}, `gamma` ∈ {scale, auto} |
+| Method | Parameters Tuned |
+|--------|-----------------|
+| CNN | `lr` ∈ {0.01, 0.001}, epochs = 4 |
+| KNN | `n_neighbors` ∈ {3, 5, 7, 9}, `metric` ∈ {euclidean, manhattan} |
+| SVM RBF | `C` ∈ {1, 5, 10}, `gamma` ∈ {0.0005, 0.001, 0.005} |
+| SVM Polynomial | `C` ∈ {0.1, 1, 5, 10}, `degree` ∈ {2, 3, 4}, `gamma` ∈ {scale, auto} |
 
 ---
 
@@ -90,46 +112,45 @@ GridSearchCV with **5-fold cross-validation** was used to find optimal parameter
 
 > ⚠️ Results will be updated after full experiments are completed.
 
-| Model                    | Accuracy | F1 Score (Weighted) |
-|--------------------------|----------|----------------------|
-| SVM — RBF (baseline)     | TBD      | TBD                  |
-| SVM — Poly (baseline)    | TBD      | TBD                  |
-| SVM — Best RBF (tuned)   | TBD      | TBD                  |
-| SVM — Best Poly (tuned)  | TBD      | TBD                  |
+| Model | Accuracy | F1 Score (Weighted) |
+|-------|----------|----------------------|
+| CNN (best LR) | TBD | TBD |
+| KNN Baseline | TBD | TBD |
+| KNN (GridSearchCV) | TBD | TBD |
+| SVM RBF Baseline | TBD | TBD |
+| SVM Poly Baseline | TBD | TBD |
+| SVM RBF (GridSearchCV) | TBD | TBD |
+| SVM Poly (GridSearchCV) | TBD | TBD |
 
 ---
 
 ## 📦 Dependencies
 
-| Package        | Purpose                         |
-|----------------|---------------------------------|
-| `numpy`        | Numerical operations            |
-| `pandas`       | Data loading and manipulation   |
-| `matplotlib`   | Plotting and visualization      |
-| `seaborn`      | Heatmaps and styled plots       |
-| `scikit-learn` | SVM, PCA, GridSearchCV, metrics |
-| `kagglehub`    | Downloading the dataset         |
+| Package | Purpose |
+|---------|---------|
+| `torch` | CNN model definition and training |
+| `torchvision` | Fashion MNIST dataset loading |
+| `numpy` | Numerical operations |
+| `pandas` | Results tables and display |
+| `matplotlib` | Plotting and visualization |
+| `seaborn` | Heatmaps and styled plots |
+| `scikit-learn` | KNN, SVM, PCA, GridSearchCV, metrics |
 
 ---
 
 ## 📓 Notebook Structure
 
-| Cell | Description |
-|------|-------------|
-| 1  | Imports & Dataset Download |
-| 2  | Load & Explore Data |
-| 3  | Prepare Features & Labels + Normalization |
-| 4  | Visualize Sample Images |
-| 5  | Create Training Subset (10K samples) |
-| 6  | Baseline SVM — RBF & Polynomial |
-| 7  | GridSearchCV — Best RBF Kernel |
-| 8  | GridSearchCV — Best Polynomial Kernel |
-| 9  | Evaluate Best Models + Classification Report |
-| 10 | Confusion Matrix Heatmap |
-| 11 | Visualize Predictions (Correct / Incorrect) |
-| 12 | One Sample Per Class (Dataset Overview) |
-| 13 | Results Comparison Table — All 4 Models |
-| 14 | Reusable Helper Functions (`evaluate_model`, `build_svm_pipeline`) |
+| Section | Description |
+|---------|-------------|
+| Setup & Imports | All libraries and device configuration |
+| 1. Dataset & Visualization | Load Fashion MNIST, plot sample grid |
+| 2. CNN — Methods & Tuning | Define FashionCNN, train with learning rate search |
+| 2B. KNN — Methods & Tuning | Baseline KNN + GridSearchCV with PCA pipeline |
+| 2C. SVM — Methods & Tuning | Baseline SVM (RBF & Poly) + GridSearchCV with PCA pipeline |
+| 2D. Reusable Helper Functions | `evaluate_sklearn_model()`, `build_sklearn_pipeline()` |
+| 3. Preliminary Results | CNN training curves, confusion matrices for all models |
+| 4. Final Testing & Visual Inference | Visual predictions on test batch (green = correct, red = wrong) |
+| 5. Summary — All Methods | Combined comparison table across all 4 methods |
 
 ---
 
@@ -140,6 +161,7 @@ GridSearchCV with **5-fold cross-validation** was used to find optimal parameter
 | Norah Aljayan | 444200832 |
 | Rana Alngashy | 444204737 |
 | Ghalia Alkhaldi | 444200534 |
+| Layan Alhowaimel | 444200969 |
 
 **Course:** IT461 — Practical Machine Learning  
 **Institution:** King Saud University  
