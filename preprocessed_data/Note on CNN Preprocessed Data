@@ -1,0 +1,10 @@
+> ** Note on CNN Preprocessed Data**
+> 
+> The CNN preprocessed files (`CNN_X_train.npy` and `CNN_X_test.npy`) are not included
+> in this repository because they exceed GitHub's 100MB file size limit. These files are
+> simply the raw Fashion-MNIST pixel values normalized to [0, 1], which are reproduced
+> automatically when the notebook is run via torchvision.
+> 
+> The uploaded preprocessed files represent the KNN and SVM pipeline specifically — the
+> stratified subset after PCA dimensionality reduction (784 → 100 features) — which is
+> the meaningful preprocessing work for those models.
